@@ -212,6 +212,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
                 '_nosid' => true
             )));
         }
+        Mage::dispatchEvent('clockworkgeek_api_prepare_product_after', [
+            'product' => $product,
+            'request' => $this->getRequest(),
+            'store' => $this->_getStore(),
+        ]);
     }
 
     /**
