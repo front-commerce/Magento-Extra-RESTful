@@ -72,13 +72,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract_Filter extends Mage_Api2_Mo
                 // if complex type is received there will probably be a warning
                 switch (@$spec[$attr]) {
                     case 'boolean':
-                        $val = boolval($val);
+                        $val = (bool) $val;
                         break;
                     case 'float':
-                        $val = floatval($val);
+                        $val = (float) $val;
                         break;
                     case 'int':
-                        $val = intval($val);
+                        $val = (int) $val;
                         break;
                 }
             }
