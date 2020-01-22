@@ -202,7 +202,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
                 );
             }, (array) $product->getData('tier_price')));
         }
-        if ($this->isReadable('total_reviews_count')) {
+        if ($this->isReadable('total_reviews_count') && Mage::helper('core')->isModuleEnabled('Mage_Review')) {
             $product->setTotalReviewsCount((int)
                 Mage::getModel('review/review')->getTotalReviews($product->getId(), true, $storeId));
         }
