@@ -30,8 +30,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
             $category->setProductCount($products->getSize());
         }
         if ($this->isReadable('url')) {
-            $category->setRequestPath(
-                $category->getUrlRewrite()->loadByIdPath('category/'.$category->getId())->getRequestPath());
+            $category->setUrl($category->getUrlModel()->getCategoryUrl($category), array(
+                // prevent accidentally starting session for SID check
+                '_nosid' => true
+            ));
         }
         $category->setImageUrl($category->getImageUrl());
         $this->_prepareCategory($category);
