@@ -176,7 +176,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
             $product->setHasOptions((bool) $product->getHasOptions());
         }
         if ($this->isReadable('image_url')) {
-            $product->setImageUrl((string) Mage::helper('catalog/image')->init($product, 'image'));
+            $imageUrl = $product->getImage();
+            if ($imageUrl == 'no_selection' || !$imageUrl) {
+                $imageUrl = '';
+            } else {
+                $imageUrl = 'media/catalog/product/' . $imageUrl;
+            }
+            $product->setImageUrl((string) $imageUrl);
         }
         if ($this->isReadable('is_in_stock') && $product->getStockItem()) {
             $product->setIsInStock((bool) $product->getStockItem()->getIsInStock());
@@ -207,10 +213,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
                 Mage::getModel('review/review')->getTotalReviews($product->getId(), true, $storeId));
         }
         if ($this->isReadable('url')) {
-            $product->setUrl($product->getUrlModel()->getUrl($product, array(
+            $productUrl = $product->getUrlModel()->getUrl($product, array(
                 // prevent accidentally starting session for SID check
                 '_nosid' => true
-            )));
+            ));
+
+            $product->setUrl(str_replace(Mage::getBaseUrl(), '', $productUrl));
         }
         Mage::dispatchEvent('clockworkgeek_api_prepare_product_after', [
             'product' => $product,
