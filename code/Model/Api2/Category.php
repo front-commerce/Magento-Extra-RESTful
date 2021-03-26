@@ -31,9 +31,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
         }
         if ($this->isReadable('url')) {
             $categoryUrl = $category->getUrlModel()->getCategoryUrl($category);
-            $category->setUrl(str_replace(Mage::getBaseUrl(), '', $categoryUrl));
+            $category->setUrl(str_replace(Mage::getBaseUrl(), '/', $categoryUrl));
         }
-        $category->setImageUrl('media/catalog/category/' . $category->getImage());
+        $category->setImageUrl('/media/catalog/category/' . $category->getImage());
         $this->_prepareCategory($category);
 
         if ($lastMod = strtotime($category->getUpdatedAt())) {
@@ -69,7 +69,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
                 // prevent accidentally starting session for SID check
                 '_nosid' => true
             ));
-            $category->setUrl(str_replace(Mage::getBaseUrl(), '', $url));
+            $category->setUrl(str_replace(Mage::getBaseUrl(), '/', $url));
         }
     }
 
@@ -102,7 +102,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
         }
 
         if ($this->isReadable('image_url')) {
-            $dir = 'media/catalog/category/';
+            $dir = '/media/catalog/category/';
             $method = method_exists($categories, 'addExpressionAttributeToSelect') ? 'addExpressionAttributeToSelect' : 'addExpressionFieldToSelect';
             $categories->$method('image_url', "CONCAT('{$dir}', {{image}})", 'image');
             // map is only used by flat tables, doesn't hurt EAV tables

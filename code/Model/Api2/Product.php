@@ -180,7 +180,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
             if ($imageUrl == 'no_selection' || !$imageUrl) {
                 $imageUrl = '';
             } else {
-                $imageUrl = 'media/catalog/product/' . $imageUrl;
+                $imageUrl = '/media/catalog/product/' . $imageUrl;
             }
             $product->setImageUrl((string) $imageUrl);
         }
@@ -218,7 +218,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
                 '_nosid' => true
             ));
 
-            $product->setUrl(str_replace(Mage::getBaseUrl(), '', $productUrl));
+            $product->setUrl(str_replace(Mage::getBaseUrl(), '/', $productUrl));
         }
         Mage::dispatchEvent('clockworkgeek_api_prepare_product_after', [
             'product' => $product,
